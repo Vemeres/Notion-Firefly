@@ -14,7 +14,7 @@ const readFriendsConfig = async () => {
 // 友链页面配置
 export const friendsPageConfig: FriendsPageConfig = {
 	// 是否启用友链提交表单
-	showSubmitForm: false,
+	showSubmitForm: true,
 
 	// 页面标题，如果留空则使用 i18n 中的翻译
 	title: "",

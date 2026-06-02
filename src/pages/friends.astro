@@ -163,7 +163,7 @@ const description =
   <!-- 友链提交表单 -->
   {friendsPageConfig.showSubmitForm && (
   <div class="mt-4">
-    <div class="card-base px-9 py-6 rounded-xl">
+    <div class="card-base p-9 rounded-xl">
       <h2 class="text-2xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
         申请友链
       </h2>
@@ -172,6 +172,23 @@ const description =
       </p>
       
       <form id="friendForm" class="space-y-4">
+        <label for="title" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+          友链申请类型
+          <span class="text-red-500">*</span>
+        </label>
+        <div class="flex justify-start gap-2">
+          
+          <input type="radio" id="type-add" name="type" value="add" class="hidden" required checked>
+          <label for="type-add" class="radio btn-regular px-3 py-1.5 rounded-lg bg-(--primary) text-white hover:bg-(--btn-regular-bg-hover) transition-colors duration-200 text-sm font-medium cursor-pointer">
+            新增友链
+          </label>
+          
+          <input type="radio" id="type-update" name="type" value="update" class="hidden" required>
+          <label for="type-update" class="radio btn-regular px-3 py-1.5 rounded-lg bg-(--btn-regular-bg) text-(--btn-content) hover:bg-(--btn-regular-bg-hover) transition-colors duration-200 text-sm font-medium cursor-pointer">
+            修改已有友链
+          </label>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label for="title" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
@@ -230,6 +247,34 @@ const description =
             required
             class="w-full px-3 py-2 border border-(--line-divider) rounded-lg focus:outline-none focus:ring-2 focus:ring-(--primary) focus:border-transparent text-neutral-600 dark:text-neutral-400 placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
             placeholder="请输入您的站点描述"
+          />
+        </div>
+
+        <!-- 修改链接专用字段 - 默认隐藏 -->
+        <div  id="updateFields1" class="hidden">
+          <label for="oldSiteurl" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+            您的旧站点URL
+            <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="url"
+            id="oldSiteurl"
+            name="oldSiteurl"
+            class="w-full px-3 py-2 border border-(--line-divider) rounded-lg focus:outline-none focus:ring-2 focus:ring-(--primary) focus:border-transparent text-neutral-600 dark:text-neutral-400 placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
+            placeholder="请输入您的旧站点URL（请确保在上面的表单填写修改后的新信息）"
+          />
+        </div>
+        <div id="updateFields2" class="hidden">
+          <label for="reason" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+            修改原因
+            <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="reason"
+            name="reason"
+            class="w-full px-3 py-2 border border-(--line-divider) rounded-lg focus:outline-none focus:ring-2 focus:ring-(--primary) focus:border-transparent text-neutral-600 dark:text-neutral-400 placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
+            placeholder="请简单说明您修改友链的原因"
           />
         </div>
         
@@ -330,11 +375,84 @@ const description =
   </style>
 
   <script is:inline>
-    document.addEventListener('DOMContentLoaded', function() {
+    // 初始化友链表单功能
+    function initFriendForm() {
       const form = document.getElementById('friendForm');
       const messageDiv = document.getElementById('formMessage');
       const submitButton = document.getElementById('submitLinkBtn');
       
+      if (!form) return; // 如果表单不存在，直接返回
+      
+      // 处理友链类型选择按钮样式切换和字段显示/隐藏
+      const typeLabels = document.querySelectorAll('label[for^="type-"]');
+      const updateFields1 = document.getElementById('updateFields1');
+      const updateFields2 = document.getElementById('updateFields2');
+      const oldSiteurlInput = document.getElementById('oldSiteurl');
+      const reasonInput = document.getElementById('reason');
+      
+      // 切换友链类型函数
+      function switchFriendLinkType(selectedValue) {
+        const isUpdate = selectedValue === 'update';
+        
+        // 更新标签样式
+        typeLabels.forEach(label => {
+          const labelFor = label.getAttribute('for');
+          const isSelected = isUpdate ? labelFor === 'type-update' : labelFor === 'type-add';
+          
+          if (isSelected) {
+            label.classList.remove('bg-(--btn-regular-bg)', 'text-(--btn-content)', 'hover:bg-(--btn-regular-bg-hover)');
+            label.classList.add('bg-(--primary)', 'text-white', 'hover:bg-(--primary)');
+          } else {
+            label.classList.remove('bg-(--primary)', 'text-white', 'hover:bg-(--primary)');
+            label.classList.add('bg-(--btn-regular-bg)', 'text-(--btn-content)', 'hover:bg-(--btn-regular-bg-hover)');
+          }
+        });
+        
+        // 显示/隐藏修改链接专用字段
+        if (isUpdate) {
+          if (updateFields1) updateFields1.classList.remove('hidden');
+          if (updateFields2) updateFields2.classList.remove('hidden');
+          if (oldSiteurlInput) oldSiteurlInput.setAttribute('required', 'required');
+          if (reasonInput) reasonInput.setAttribute('required', 'required');
+        } else {
+          if (updateFields1) updateFields1.classList.add('hidden');
+          if (updateFields2) updateFields2.classList.add('hidden');
+          if (oldSiteurlInput) oldSiteurlInput.removeAttribute('required');
+          if (reasonInput) reasonInput.removeAttribute('required');
+        }
+      }
+      
+      // 使用事件委托处理标签点击
+      form.addEventListener('click', function(e) {
+        const label = e.target.closest('label[for^="type-"]');
+        if (!label) return;
+        
+        e.preventDefault();
+        const targetFor = label.getAttribute('for');
+        const targetRadio = document.getElementById(targetFor);
+        if (targetRadio && !targetRadio.checked) {
+          targetRadio.checked = true;
+          switchFriendLinkType(targetRadio.value);
+        }
+      });
+      
+      // 监听radio按钮的change事件
+      const typeRadios = form.querySelectorAll('input[name="type"]');
+      typeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          if (this.checked) {
+            switchFriendLinkType(this.value);
+          }
+        });
+      });
+      
+      // 初始化状态
+      const checkedRadio = form.querySelector('input[name="type"]:checked');
+      if (checkedRadio) {
+        switchFriendLinkType(checkedRadio.value);
+      }
+      
+      // 表单提交处理
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -347,14 +465,17 @@ const description =
         
         const formData = new FormData(form);
         const data = {
+          type: formData.get('type'),
           title: formData.get('title'),
           siteurl: formData.get('siteurl'),
           imgurl: formData.get('imgurl'),
           desc: formData.get('desc'),
+          oldSiteurl: formData.get('oldSiteurl'),
+          reason: formData.get('reason')
         };
         
         // 这里注意替换你的友链提交 API 地址
-        const submitLinksApi = "api/submit-links/";
+        const submitLinksApi = "https://api.example.com/submit/";
         try {
           const response = await fetch(submitLinksApi, {
             method: 'POST',
@@ -365,34 +486,61 @@ const description =
           });
           
           const result = await response.json();
+          const umamiData = {
+            Status: result.success ? 'Success' : 'Failed',
+            Type: data.type === 'add' ? '新增' : '修改',
+            Title: data.title,
+            Siteurl: data.siteurl,
+            Imgurl: data.imgurl,
+            Desc: data.desc,
+            OldSiteurl: data.oldSiteurl || 'unknown',
+            Reason: data.reason || 'unknown',
+          };
           
           if (response.ok && result.success) {
             messageDiv.textContent = result.message || '友链申请提交成功！我会尽快处理并添加。';
             messageDiv.className = 'mt-4 p-3 rounded-lg bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200';
+            if (typeof umami !== 'undefined') {
+              umami.track('Submit Friend-Link', umamiData);
+            }
             form.reset();
           } else {
             messageDiv.textContent = result.message || '提交失败，请稍后重试。';
             messageDiv.className = 'mt-4 p-3 rounded-lg bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200';
+            if (typeof umami !== 'undefined') {
+              umami.track('Submit Friend-Link', umamiData);
+            }
           }
         } catch (error) {
-          // console.error(error);
           messageDiv.textContent = '网络错误，请检查连接后重试。';
           messageDiv.className = 'mt-4 p-3 rounded-lg bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200';
         } finally {
-          submitButton.textContent = '提交申请';
-          // 5秒后重新启用提交按钮
-          setTimeout(() => {
-            if (submitButton) {
+          if (submitButton) {
+            submitButton.textContent = '提交申请';
+            setTimeout(() => {
               submitButton.disabled = false;
               submitButton.style.cursor = 'pointer';
-            }
-          }, 5000);
+            }, 5000);
+          }
           setTimeout(() => {
-            messageDiv.textContent = '';
-            messageDiv.className = '';
+            if (messageDiv) {
+              messageDiv.textContent = '';
+              messageDiv.className = '';
+            }
           }, 10000);
         }
       });
-    });
+    }
+    
+    // 初始加载
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFriendForm);
+    } else {
+      initFriendForm();
+    }
+    
+    // Swup/Astro 页面切换后重新初始化
+    document.addEventListener('astro:page-load', initFriendForm);
+    document.addEventListener('swup:contentReplaced', initFriendForm);
   </script>
 </MainGridLayout>
