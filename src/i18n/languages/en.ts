@@ -54,6 +54,8 @@ export const en: Translation = {
 	[Key.friends]: "Friends",
 	[Key.friendsDescription]:
 		"Here are my friends, welcome to visit and communicate with each other",
+	[Key.searchFriends]: "Search friends...",
+	[Key.friendsEmpty]: "No friends yet.",
 	[Key.guestbook]: "Guestbook",
 	[Key.guestbookDescription]:
 		"Welcome to leave your mark here, share your thoughts and suggestions",
@@ -75,6 +77,7 @@ export const en: Translation = {
 	[Key.systemMode]: "System",
 
 	[Key.more]: "More",
+	[Key.collapse]: "Collapse",
 
 	[Key.author]: "Author",
 	[Key.publishedAt]: "Published at",
@@ -121,6 +124,9 @@ export const en: Translation = {
 	[Key.bangumiEmpty]: "No Data",
 	[Key.bangumiEmptyReason]:
 		"Possible reasons: username does not exist, network connection issue, or API limit",
+	[Key.bangumiFetchError]: "Bangumi Data Fetch Failed",
+	[Key.bangumiFetchErrorDesc]:
+		"Failed to fetch data from Bangumi API during build. This page is temporarily unavailable.",
 	[Key.bangumiUsername]: "Username",
 	[Key.bangumiApi]: "API",
 	[Key.bangumiConfigTip]:
@@ -206,6 +212,8 @@ export const en: Translation = {
 	[Key.randomPosts]: "Random Posts",
 	[Key.smartRecommend]: "Smart",
 	[Key.randomRecommend]: "Random",
+	[Key.noRelatedPosts]: "No related posts",
+	[Key.noRandomPosts]: "No random posts",
 
 	// Encrypted
 	[Key.postEncrypted]: "This post is encrypted",
@@ -213,14 +221,18 @@ export const en: Translation = {
 	// Wallpaper Mode
 	[Key.wallpaperMode]: "Wallpaper Mode",
 	[Key.wallpaperBannerMode]: "Banner Wallpaper",
+	[Key.wallpaperFullscreenMode]: "Fullscreen Wallpaper",
 	[Key.wallpaperOverlayMode]: "Overlay Wallpaper",
 	[Key.wallpaperNoneMode]: "None Wallpaper",
 
-	// Banner Settings
-	[Key.bannerSettings]: "Banner Settings",
-	[Key.bannerTitle]: "Home Banner Title",
-	[Key.bannerCarousel]: "Banner Carousel",
+	// Wallpaper Settings
+	[Key.wallpaperSettings]: "Wallpaper Settings",
+	[Key.wallpaperTitle]: "Home Wallpaper Title",
+	[Key.wallpaperCarousel]: "Wallpaper Carousel",
 	[Key.wavesAnimation]: "Waves Animation",
+	[Key.gradientTransition]: "Gradient Transition",
+	[Key.sakuraEffect]: "Sakura Effect",
+	[Key.effectsSettings]: "Effects Settings",
 	[Key.overlaySettings]: "Transparency Settings",
 	[Key.overlayOpacity]: "Wallpaper Opacity",
 	[Key.overlayBlur]: "Background Blur",
@@ -306,11 +318,12 @@ export const en: Translation = {
 	[Key.galleryAlbums]: "albums",
 	[Key.galleryNoAlbums]: "No albums yet",
 	[Key.galleryBackToAlbums]: "Back to albums",
+	[Key.searchAlbums]: "Search albums...",
 
 	// Password Protection
 	[Key.passwordProtected]: "Password Protected",
 	[Key.passwordProtectedDesc]:
-		"This article is password protected. Please enter the password to view the content.",
+		"This content is password protected. Please enter the password to view.",
 	[Key.passwordHint]: "Hint",
 	[Key.passwordPlaceholder]: "Enter password",
 	[Key.passwordSubmit]: "Unlock",

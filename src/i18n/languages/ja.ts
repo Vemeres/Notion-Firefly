@@ -54,6 +54,8 @@ export const ja: Translation = {
 	[Key.friends]: "友達",
 	[Key.friendsDescription]:
 		"ここは私の友達です、お互いに訪問して交流することを歓迎します",
+	[Key.searchFriends]: "友達を検索...",
+	[Key.friendsEmpty]: "まだ友達がいません",
 	[Key.guestbook]: "ゲストブック",
 	[Key.guestbookDescription]:
 		"ここに足跡を残して、あなたの考えや提案を共有してください",
@@ -75,6 +77,7 @@ export const ja: Translation = {
 	[Key.systemMode]: "システム",
 
 	[Key.more]: "もっと",
+	[Key.collapse]: "折りたたむ",
 
 	[Key.author]: "著者",
 	[Key.publishedAt]: "公開日",
@@ -121,6 +124,9 @@ export const ja: Translation = {
 	[Key.bangumiEmpty]: "データなし",
 	[Key.bangumiEmptyReason]:
 		"考えられる理由：ユーザー名が存在しない、ネットワーク接続の問題、またはAPI制限",
+	[Key.bangumiFetchError]: "Bangumi データ取得失敗",
+	[Key.bangumiFetchErrorDesc]:
+		"ビルド時に Bangumi API からのデータ取得に失敗しました。このページは一時的に利用できません。",
 	[Key.bangumiUsername]: "ユーザー名",
 	[Key.bangumiApi]: "API",
 	[Key.bangumiConfigTip]:
@@ -205,6 +211,8 @@ export const ja: Translation = {
 	[Key.randomPosts]: "ランダム記事",
 	[Key.smartRecommend]: "スマート",
 	[Key.randomRecommend]: "ランダム",
+	[Key.noRelatedPosts]: "関連記事がありません",
+	[Key.noRandomPosts]: "ランダム記事がありません",
 
 	// 暗号化
 	[Key.postEncrypted]: "この記事は暗号化されています",
@@ -212,14 +220,18 @@ export const ja: Translation = {
 	// 壁紙モード
 	[Key.wallpaperMode]: "壁紙モード",
 	[Key.wallpaperBannerMode]: "バナー壁紙",
+	[Key.wallpaperFullscreenMode]: "フルスクリーン壁紙",
 	[Key.wallpaperOverlayMode]: "透明",
 	[Key.wallpaperNoneMode]: "単色背景",
 
-	// バナー設定
-	[Key.bannerSettings]: "バナー設定",
-	[Key.bannerTitle]: "ホームバナータイトル",
-	[Key.bannerCarousel]: "バナーカルーセル",
+	// 壁紙設定
+	[Key.wallpaperSettings]: "壁紙設定",
+	[Key.wallpaperTitle]: "ホーム壁紙タイトル",
+	[Key.wallpaperCarousel]: "壁紙カルーセル",
 	[Key.wavesAnimation]: "波アニメーション",
+	[Key.gradientTransition]: "グラデーション遷移",
+	[Key.sakuraEffect]: "桜エフェクト",
+	[Key.effectsSettings]: "エフェクト設定",
 	[Key.overlaySettings]: "透明設定",
 	[Key.overlayOpacity]: "壁紙の透明度",
 	[Key.overlayBlur]: "背景ぼかし",
@@ -305,11 +317,12 @@ export const ja: Translation = {
 	[Key.galleryAlbums]: "冊のアルバム",
 	[Key.galleryNoAlbums]: "アルバムがありません",
 	[Key.galleryBackToAlbums]: "アルバム一覧に戻る",
+	[Key.searchAlbums]: "アルバムを検索...",
 
 	// パスワード保護
 	[Key.passwordProtected]: "パスワード保護",
 	[Key.passwordProtectedDesc]:
-		"この記事はパスワードで保護されています。内容を表示するにはパスワードを入力してください。",
+		"このコンテンツはパスワードで保護されています。表示するにはパスワードを入力してください。",
 	[Key.passwordHint]: "ヒント",
 	[Key.passwordPlaceholder]: "パスワードを入力",
 	[Key.passwordSubmit]: "ロック解除",
