@@ -1,0 +1,127 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import ImageWrapper from "@/components/common/ImageWrapper.astro";
+import PhotoCard from "@/components/pages/gallery/PhotoCard.astro";
+import Comment from "@/components/comment/index.astro";
+import { Icon } from "astro-icon/components";
+import {
+	profileConfig,
+	commentConfig,
+	momentPageConfig,
+	getEnabledMoments,
+	siteConfig,
+} from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import { url } from "@/utils/url-utils";
+
+// 检查页面是否启用
+if (!siteConfig.pages.moment) {
+	return Astro.redirect("/404/");
+}
+
+const allMoments = await getEnabledMoments();
+export async function getStaticPaths() {
+  const allMoments = await getEnabledMoments();
+	return allMoments.map((moment) => ({
+		params: { id: moment.id },
+	}));
+}
+
+const { id } = Astro.params;
+const momentItem = allMoments.find((a) => a.id === id);
+
+if (!momentItem) {
+	return Astro.redirect("/404/");
+}
+
+const columnCount = (length: number)=>{
+  return length <= 3 ? length : 3;
+}
+
+// 检查评论系统是否启用
+const isCommentEnabled =
+	commentConfig?.type &&
+	commentConfig.type !== "none" &&
+	momentPageConfig.showComment !== false;
+
+// 页面标题和描述
+const title = momentPageConfig.title || i18n(I18nKey.moment);
+const description = momentPageConfig.description || i18n(I18nKey.momentDescription);
+const author = momentPageConfig.author || profileConfig.name;
+const avatar = momentPageConfig.avatar || profileConfig.avatar;
+---
+
+<MainGridLayout title={title} description={description}>
+  <div
+    class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32"
+  >
+    <div class="card-base z-10 px-9 py-6 relative w-full">
+      {momentItem && (
+        <article class="relative transition moment-card">
+            <div class="flex items-start gap-4">
+              <div class="max-w-12 relative shrink-0">
+                <ImageWrapper
+                  src={avatar || ""}
+                  alt="Author"
+                  class="mx-auto lg:w-full h-full lg:mt-0 rounded-full object-cover ring-2 ring-(--btn-card-bg-hover)"
+                  loading="eager"
+                  fetchpriority="high"
+                  widths={[48]}
+                  sizes="48px"
+                />
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="flex min-w-0 items-start justify-between gap-3" > 
+                  <div class="min-w-0">
+                    <div class="truncate text-base font-bold text-(--primary)">{author}</div>
+                    <time class="mt-0.5 block text-sm text-50">{momentItem.datetime}</time> 
+                  </div> 
+                  <a href={url("/moments/")} class="btn-plain h-11 w-11 shrink-0 rounded-lg text-50 active:scale-95" aria-label="View moment" > 
+                    <Icon name="material-symbols:arrow-back-rounded" class="text-[1.5rem]" />
+                  </a>
+                </div>
+                <div class="my-2 text-neutral-600 dark:text-neutral-400" >
+                  <p class="content">{momentItem.content}</p>
+                </div>
+                {momentItem.imgurls.length > 0 && (
+                  <div
+                    class="gallery-masonry max-w-full"
+                    style={`column-count: ${columnCount(momentItem.imgurls.length)}; column-gap: 0.75rem;`}
+                  >
+                    {momentItem.imgurls.map((photo) => (
+                      <PhotoCard src={photo} albumId={momentItem.id}/>
+                    ))}
+                  </div>
+                )}
+                <div class="post-meta-root flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-4 gap-x-4 gap-y-2 post-meta">
+                  {momentItem.pinned && (
+                    <div class="pinned-btn flex items-center gap-1 bg-(--btn-regular-bg) text-(--btn-content) rounded-md px-2 py-1.5 font-bold">
+                      <Icon name="material-symbols:pinboard" class="text-[1.2rem]" />
+                      <span class="text-sm">置顶</span> 
+                    </div>
+                  )}
+                  {momentItem.location && (
+                    <div class="pinned-btn flex items-center gap-1 bg-(--btn-regular-bg) text-(--btn-content) rounded-md px-2 py-1.5 font-bold">
+                      <Icon name="material-symbols:location-on" class="text-[1.2rem]" />
+                      <span class="text-sm">{momentItem.location}</span>
+                    </div>
+                  )}
+                  {momentItem.tags.map((tag) => (
+                    <span class="transition link text-(--primary) font-medium cursor-pointer">#{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+        </article>
+      )}
+    </div>
+  </div>
+
+  <!-- 评论区 -->
+  {isCommentEnabled && (
+    <div class="mt-4">
+      <Comment customPath={`/moments/${id}/`} />
+    </div>
+  )}
+</MainGridLayout>

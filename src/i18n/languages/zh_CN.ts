@@ -311,6 +311,13 @@ export const zh_CN: Translation = {
 	[Key.galleryBackToAlbums]: "返回相册列表",
 	[Key.searchAlbums]: "搜索相簿...",
 
+	// 瞬间页面
+	[Key.moment]: "瞬间",
+	[Key.momentDescription]: "记录我的点滴生活",
+	[Key.momentNoItem]: "暂无动态",
+	[Key.momentBackToMoments]: "返回动态列表",
+	[Key.searchMoments]: "搜索动态",
+
 	// 密码保护
 	[Key.passwordProtected]: "密码保护",
 	[Key.passwordProtectedDesc]: "此内容已被密码保护，请输入密码查看。",

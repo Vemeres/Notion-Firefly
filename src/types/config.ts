@@ -86,6 +86,7 @@ export type SiteConfig = {
 		guestbook: boolean; // 留言板页面开关
 		bangumi: boolean;
 		gallery: boolean; // 相册页面开关
+		moment: boolean; // 瞬间页面开关
 	};
 
 	// 分类导航栏开关
@@ -179,6 +180,7 @@ export enum LinkPreset {
 	Guestbook = 5,
 	Bangumi = 6,
 	Gallery = 7,
+	Moment = 8,
 }
 
 export type NavBarLink = {
@@ -816,4 +818,24 @@ export type GalleryAlbum = {
 export type GalleryConfig = {
 	albums: GalleryAlbum[];
 	columnWidth?: number; // 瀑布流最小列宽(px)，默认 240，浏览器根据容器宽度自动计算列数
+};
+
+// 瞬间配置
+export type MomentPageConfig = {
+	title?: string;
+	description?: string;
+	showComment: boolean;
+	author?: string;
+	avatar?: string;
+	maxSize: number;
+};
+export type MomentItem = {
+	id: string;
+	content: string;
+	imgurls: string[];
+	datetime: string;
+	tags: string[];
+	location?: string;
+	pinned: boolean;
+	enabled: boolean;
 };

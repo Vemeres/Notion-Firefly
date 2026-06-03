@@ -308,6 +308,13 @@ enum I18nKey {
 	galleryBackToAlbums = "galleryBackToAlbums",
 	searchAlbums = "searchAlbums",
 
+	// 瞬间页面
+	moment = "moment",
+	momentDescription = "momentDescription",
+	momentNoItem = "momentNoItem",
+	momentBackToMoments = "momentBackToMoments",
+	searchMoments = "searchMoments",
+
 	// 密码保护
 	passwordProtected = "passwordProtected",
 	passwordProtectedDesc = "passwordProtectedDesc",
