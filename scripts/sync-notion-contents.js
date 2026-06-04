@@ -42,12 +42,12 @@ async function downloadImage(url, savePath) {
     const skipDomains = CONFIG.skipDomains;
     if (skipDomains.some(domain => url.includes(domain))) {
       console.log(`⚠️  图片跳过下载: ${url}`);
-      return false;
+      return true;
     }
     // 检查图片是否已存在
     if (await fs.pathExists(savePath)) {
       console.log(`✅ 图片已存在，跳过下载: ${url}`);
-      return false;
+      return true;
     }
     // 检查是否为图片格式
     const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'avif'];
@@ -230,7 +230,7 @@ async function syncPost(post) {
   const frontmatter = `---
 title: ${title}
 slug: ${slug}
-status: ${properties.Status?.select?.name || 'Draft'}
+draft: ${properties.Status?.select?.name === 'Draft' ? true : false}
 pinned: ${properties.Pinned?.checkbox || false}
 category: ${properties.Category?.select?.name || 'Uncategorized'}
 tags: [${properties.Tags?.multi_select?.map(tag => `'${tag.name}'`).join(', ') || ''}]
