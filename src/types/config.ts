@@ -180,7 +180,9 @@ export enum LinkPreset {
 	Guestbook = 5,
 	Bangumi = 6,
 	Gallery = 7,
-	Moment = 8,
+	Tags = 8,
+	Categories = 9,
+	Moment = 10,
 }
 
 export type NavBarLink = {
@@ -434,6 +436,7 @@ export type WidgetComponentConfig = {
 	responsive?: {
 		hidden?: ("mobile" | "tablet" | "desktop")[]; // 在指定设备上隐藏
 		collapseThreshold?: number; // 折叠阈值
+		showHeatmap?: boolean; // 是否显示热力图（仅日历组件）
 	};
 	customProps?: Record<string, unknown>; // 自定义属性，用于扩展组件功能
 };
@@ -447,6 +450,7 @@ export type MobileBottomComponentConfig = {
 	responsive?: {
 		hidden?: ("mobile" | "tablet" | "desktop")[]; // 在指定设备上隐藏
 		collapseThreshold?: number; // 折叠阈值
+		showHeatmap?: boolean; // 是否显示热力图（仅日历组件）
 	};
 	customProps?: Record<string, unknown>; // 自定义属性，用于扩展组件功能
 };
