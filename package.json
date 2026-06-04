@@ -18,7 +18,8 @@
     "lqips": "npx tsx scripts/generate-lqips.ts",
     "sync-contents:all": "node scripts/sync-notion-contents.js --mode=all",
     "sync-contents:new": "node scripts/sync-notion-contents.js --mode=new",
-    "sync-links": "node scripts/sync-notion-links.js"
+    "sync-links": "node scripts/sync-notion-links.js",
+    "sync-moments": "node scripts/sync-notion-moments.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
